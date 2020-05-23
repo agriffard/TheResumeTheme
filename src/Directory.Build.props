@@ -1,0 +1,15 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <PackageId>TheResumeTheme</PackageId>
+    <Title>Resume theme for Orchard Core</Title>
+    <Description>Orchard Core Theme based on the Resume css template from StartBootstrap.</Description>
+    <PackageTags>Resume;OrchardCore</PackageTags>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>rc1</VersionSuffix>
+  </PropertyGroup>
+
+  <!-- Called after so that the <VersionSuffix> is built after the local ones -->
+  <Import Project="Common.props"/>
+
+</Project>
