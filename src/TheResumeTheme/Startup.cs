@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Modules;
 using OrchardCore.ResourceManagement;
 
-namespace Resume
+namespace TheResumeTheme
 {
     public class Startup : StartupBase
     {

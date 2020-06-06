@@ -1,9 +1,9 @@
 using OrchardCore.DisplayManagement.Manifest;
 
 [assembly: Theme(
-    Name = "Resume",
-    Author = "Start Bootstrap",
-    Website = "https://startbootstrap.com/template-overviews/resume",
-    Version = "1.0.0-beta2",
+    Name = "TheResumeTheme",
+    Author = "Antoine Griffard",
+    Website = "https://github.com/agriffard/TheResumeTheme",
+    Version = "1.0.0-rc1",
     Description = "Resume theme"
 )]

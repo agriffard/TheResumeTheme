@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <PackageId>TheResumeTheme</PackageId>
-    <Title>Resume theme for Orchard Core</Title>
-    <Description>Orchard Core Theme based on the Resume css template from StartBootstrap.</Description>
-    <PackageTags>Resume;OrchardCore</PackageTags>
+    <Title>Resume Theme</Title>
+    <Description>Resume Theme for Orchard Core</Description>
+    <PackageTags>Theme;OrchardCore</PackageTags>
     <VersionPrefix>1.0.0</VersionPrefix>
     <VersionSuffix>rc1</VersionSuffix>
   </PropertyGroup>
