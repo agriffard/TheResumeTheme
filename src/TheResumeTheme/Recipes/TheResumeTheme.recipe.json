@@ -1538,6 +1538,31 @@
       ]
     },
     {
+      "name": "Templates",
+      "Templates": {
+        "Content__LandingPage": {
+          "Content": "<section class=\"resume-section\" id=\"about\">\r\n  <div class=\"resume-section-content\">\r\n    <h1 class=\"mb-0\">\r\n      <span class=\"text-primary\">{{ Model.ContentItem.Content.TitlePart.Title }}</span>\r\n    </h1>\r\n    <div class=\"subheading mb-5\">{{ Model.ContentItem.Content.LandingPage.Subheading.Html | raw }}</div>          \r\n    <p class=\"lead mb-5\">{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}</p>\r\n    {% if Model.ContentItem.Content.Experience.ContentItems.size > 0 %}\r\n    <div class=\"social-icons\">\r\n      {% for link in Model.ContentItem.Content.Links.ContentItems %}\r\n      <a href=\"{{ link.Link.Url.Text }}\">\r\n        <i class=\"fab fa-{{ link.Link.Icon.Text }}\"></i>\r\n      </a>\r\n      {% endfor %}\r\n    </div>\r\n    {% endif %}\r\n  </div>\r\n</section>\r\n{% assign format = \"MMMM yyyy\" | t %}\r\n{% if Model.ContentItem.Content.Experience.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"experience\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Experience</h2>\r\n    {% for job in Model.ContentItem.Content.Experience.ContentItems %}\r\n    <div class=\"resume-item d-flex flex-column flex-md-row mb-5\">\r\n      <div class=\"resume-content mr-auto\">\r\n        <h3 class=\"mb-0\">{{ job.TitlePart.Title }}</h3>\r\n        <div class=\"subheading mb-3\">{{ job.Job.Company.Text }}</div>\r\n        <p>{{ job.HtmlBodyPart.Html | raw }}</p>\r\n      </div>\r\n      <div class=\"flex-shrink-0\">\r\n      {% assign dateStart = \"DateTime\" | shape_new: utc: job.Job.Start.Value, format: format | shape_stringify %}\r\n      {% assign dateEnd = \"DateTime\" | shape_new: utc: job.Job.End.Value, format: format | shape_stringify %}\r\n        <span class=\"text-primary\">{{ \"{0}\" | t: dateStart | raw }} - {{ \"{0}\" | t: dateEnd | raw }}</span>\r\n      </div>\r\n    </div>\r\n    {% endfor %}\r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Education.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"education\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Education</h2>\r\n    {% for teaching in Model.ContentItem.Content.Education.ContentItems %}\r\n    <div class=\"resume-item d-flex flex-column flex-md-row mb-5\">\r\n      <div class=\"resume-content mr-auto\">\r\n        <h3 class=\"mb-0\">{{ teaching.TitlePart.Title }}</h3>\r\n        <div class=\"subheading mb-3\">{{ teaching.Teaching.Qualification.Text }}</div>\r\n        <p>{{ job.HtmlBodyPart.Html | raw }}</p>\r\n      </div>\r\n      <div class=\"flex-shrink-0\">\r\n      {% assign dateStart = \"DateTime\" | shape_new: utc: teaching.Teaching.Start.Value, format: format | shape_stringify %}\r\n      {% assign dateEnd = \"DateTime\" | shape_new: utc: teaching.Teaching.End.Value, format: format | shape_stringify %}\r\n        <span class=\"text-primary\">{{ \"{0}\" | t: dateStart | raw }} - {{ \"{0}\" | t: dateEnd | raw }}</span>\r\n      </div>\r\n    </div>\r\n    {% endfor %}\r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Skills.ContentItems.size > 0 %}   \r\n<section class=\"resume-section\" id=\"skills\">\r\n        <div class=\"resume-section-content\">\r\n          <h2 class=\"mb-5\">Skills</h2>\r\n\r\n          <div class=\"subheading mb-3\">Programming Languages &amp; Tools</div>\r\n          <ul class=\"list-inline dev-icons\">\r\n            <li class=\"list-inline-item\">\r\n              <i class=\"fab fa-html5\"></i>\r\n            </li>\r\n            <li class=\"list-inline-item\">\r\n              <i class=\"fab fa-css3-alt\"></i>\r\n            </li>\r\n            <li class=\"list-inline-item\">\r\n              <i class=\"fab fa-js-square\"></i>\r\n            </li>\r\n          </ul>\r\n   \r\n          <div class=\"subheading mb-3\">Competencies</div>   \r\n          <ul class=\"fa-ul mb-0\">         \r\n    {% for skill in Model.ContentItem.Content.Skills.ContentItems %}\r\n            <li>\r\n              <i class=\"fa-li fa fa-check\"></i> {{ skill.TitlePart.Title }}</li> \r\n    {% endfor %}  \r\n          </ul>\r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Interests.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"interests\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Interests</h2>\r\n    {% for interest in Model.ContentItem.Content.Interests.ContentItems %}\r\n    <p>{{ interest.HtmlBodyPart.Html | raw }}</p>\r\n    {% endfor %}           \r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Awards.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"awards\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Awards</h2>\r\n    <ul class=\"fa-ul mb-0\">\r\n    {% for award in Model.ContentItem.Content.Awards.ContentItems %}\r\n      <li><i class=\"fa-li fa fa-trophy text-warning\"></i> {{ award.TitlePart.Title }}</li> \r\n    {% endfor %}           \r\n    </ul>\r\n  </div>\r\n</section>\r\n{% endif %}",
+          "Description": "A template for the Landing Page content type"
+        },
+        "Widget": {
+          "Content": "{{ Model.Content | shape_render }}",
+          "Description": null
+        },
+        "Widget__Html": {
+          "Content": "{% assign fields = Model.ContentItem.Content[Model.ContentItem.ContentType] %}\r\n{{ fields.Content.Html | raw }}",
+          "Description": null
+        },
+        "Widget_Wrapper": {
+          "Content": "{{ Model.Content | shape_render }}",
+          "Description": null
+        },
+        "HtmlField": {
+          "Content": "{{ Model.Html | raw }}",
+          "Description": null
+        }
+      }
+    },
+    {
       "name": "media",
       "Files": [
         {
