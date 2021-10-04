@@ -13,7 +13,7 @@ namespace TheResumeTheme
         {
             _manifest
                .DefineScript("Resume")
-               .SetDependencies("bootstrap") //, jQuery.easing
+               .SetDependencies("bootstrap", "jQuery.easing")
                .SetUrl("~/TheResumeTheme/js/scripts.min.js", "~/TheResumeTheme/js/scripts.js")
                .SetVersion("6.0.0");
 
