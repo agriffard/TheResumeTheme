@@ -844,7 +844,6 @@
         //Menu
         {
           "ContentItemId": "[js:uuid()]",
-          "ContentItemVersionId": "[js:uuid()]",
           "ContentType": "Menu",
           "DisplayText": "Main Menu",
           "Latest": true,
@@ -920,7 +919,6 @@
         //LandingPage
         {
           "ContentItemId": "[js: variables('landingContentItemId')]",
-          "ContentItemVersionId": "[js:uuid()]",
           "ContentType": "LandingPage",
           "DisplayText": "[js: parameters('SiteName')]",
           "Latest": true,
