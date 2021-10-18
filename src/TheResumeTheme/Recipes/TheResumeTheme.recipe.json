@@ -11,19 +11,17 @@
 
   // The variables are evaluated the first time they are accessed, and reused across steps
   "variables": {
-    "defaultContentItemId": "[js:uuid()]"
+    "landingContentItemId": "[js:uuid()]"
   },
 
   "steps": [
+    //feature
     {
       "name": "feature",
-      "disable": [],
       "enable": [
         // SaaS
-        "OrchardCore.Mvc",
         "OrchardCore.HomeRoute",
         "OrchardCore.Admin",
-        "OrchardCore.Commons",
         "OrchardCore.Diagnostics",
         "OrchardCore.DynamicCache",
         "OrchardCore.Features",
@@ -67,527 +65,304 @@
         "SafeMode"
       ]
     },
+    //themes
     {
       "name": "themes",
       "admin": "TheAdmin",
       "site": "TheResumeTheme"
     },
+    //settings
     {
       "name": "settings",
       "HomeRoute": {
         "Action": "Display",
         "Controller": "Item",
         "Area": "OrchardCore.Contents",
-        "ContentItemId": "[js: variables('defaultContentItemId')]"
+        "ContentItemId": "[js: variables('landingContentItemId')]"
       },
       "LayerSettings": {
         "Zones": [ "Content" ]
       }
     },
+    //ContentDefinition
     {
       "name": "ContentDefinition",
       "ContentTypes": [
-        {
-          "Name": "Menu",
-          "DisplayName": "Menu",
-          "Settings": {
-            "Draftable": "True",
-            "Versionable": "True",
-            "Creatable": "True",
-            "Listable": "True"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "TitlePart",
-              "Name": "TitlePart",
-              "Settings": {
-                "Position": "1"
-              }
-            },
-            {
-              "PartName": "AliasPart",
-              "Name": "AliasPart",
-              "Settings": {
-                "Position": "2",
-                "AliasPartSettings": {
-                  "Pattern": "{{ ContentItem | display_text | slugify }}"
-                }
-              }
-            },
-            {
-              "PartName": "MenuPart",
-              "Name": "MenuPart",
-              "Settings": {
-                "Position": "3"
-              }
-            },
-            {
-              "PartName": "MenuItemsListPart",
-              "Name": "MenuItemsListPart",
-              "Settings": {
-                "Position": "4"
-              }
-            }
-          ]
-        },
-        {
-          "Name": "LinkMenuItem",
-          "DisplayName": "Link Menu Item",
-          "Settings": {
-            "Stereotype": "MenuItem"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "LinkMenuItemPart",
-              "Name": "LinkMenuItemPart",
-              "Settings": {}
-            }
-          ]
-        },
-        {
-          "Name": "LiquidPage",
-          "DisplayName": "Liquid Page",
-          "Settings": {
-            "Creatable": "True",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "True",
-            "Securable": "False",
-            "Stereotype": null
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "LiquidPage",
-              "Name": "LiquidPage",
-              "Settings": {
-                "Position": "2"
-              }
-            },
-            {
-              "PartName": "AutoroutePart",
-              "Name": "AutoroutePart",
-              "Settings": {
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false,
-                  "Template": null
-                },
-                "Pattern": "{{ ContentItem | display_text | slugify }}",
-                "AllowCustomPath": "True",
-                "ShowHomepageOption": "True",
-                "Position": "1"
-              }
-            },
-            {
-              "PartName": "LiquidPart",
-              "Name": "LiquidPart",
-              "Settings": {
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false,
-                  "Template": null
-                },
-                "Position": "3"
-              }
-            },
-            {
-              "PartName": "TitlePart",
-              "Name": "TitlePart",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
-        {
-          "Name": "HtmlWidget",
-          "DisplayName": "Html",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "False",
-            "Securable": "True",
-            "Stereotype": "Widget"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "HtmlWidget",
-              "Name": "HtmlWidget",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
+        //Page
         {
           "Name": "Page",
           "DisplayName": "Page",
           "Settings": {
-            "Creatable": "True",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "True",
-            "Securable": "True",
-            "Stereotype": null
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Listable": true,
+              "Securable": true
+            }
           },
           "ContentTypePartDefinitionRecords": [
             {
               "PartName": "Page",
               "Name": "Page",
               "Settings": {
-                "Position": "3"
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
               }
             },
             {
               "PartName": "AutoroutePart",
               "Name": "AutoroutePart",
               "Settings": {
-                "Position": "1",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false,
-                  "Template": null
+                "ContentTypePartSettings": {
+                  "Position": "1"
                 },
-                "Pattern": "{{ ContentItem | display_text | slugify }}",
-                "AllowCustomPath": "True",
-                "ShowHomepageOption": "True"
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "{{ Model.ContentItem | display_text | slugify }}",
+                  "ShowHomepageOption": true
+                }
               }
             },
             {
               "PartName": "FlowPart",
               "Name": "FlowPart",
               "Settings": {
-                "Position": "2"
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
               }
             },
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
               "Settings": {
-                "Position": "0"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             }
           ]
         },
+        //LandingPage
         {
           "Name": "LandingPage",
           "DisplayName": "Landing Page",
           "Settings": {
-            "Creatable": "True",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "True",
-            "Securable": "True",
-            "Stereotype": null
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
           },
           "ContentTypePartDefinitionRecords": [
             {
               "PartName": "LandingPage",
               "Name": "LandingPage",
               "Settings": {
-                "Position": "2"
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
               }
             },
             {
               "PartName": "AutoroutePart",
               "Name": "AutoroutePart",
               "Settings": {
-                "Pattern": "{{ ContentItem | display_text | slugify }}",
-                "AllowCustomPath": "True",
-                "ShowHomepageOption": "True",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false,
-                  "Template": null
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "{{ Model.ContentItem | display_text | slugify }}",
+                  "ShowHomepageOption": true
                 },
-                "Position": "1"
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
               }
             },
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
               "Settings": {
-                "Position": "0"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                },
+                "TitlePartSettings": {},
+                "ContentIndexSettings": {}
               }
             },
             {
               "PartName": "BagPart",
               "Name": "Experience",
               "Settings": {
-                "DisplayName": "Experience",
-                "Description": "Provides a collection behavior for your content item.",
-                "ContainedContentTypes": [
-                  "Job"
-                ],
-                "DisplayType": null,
-                "Position": "5"
+                "ContentTypePartSettings": {
+                  "DisplayName": "Experience",
+                  "Description": "Provides a collection behavior for your content item.",
+                  "Position": "5"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Job"
+                  ]
+                }
               }
             },
             {
               "PartName": "HtmlBodyPart",
               "Name": "HtmlBodyPart",
               "Settings": {
-                "Position": "3",
-                "HtmlBodyPartSettings": {
+                "ContentTypePartSettings": {
+                  "Position": "3",
                   "Editor": "Wysiwyg"
-                }
+                },
+                "HtmlBodyPartSettings": {},
+                "ContentIndexSettings": {}
               }
             },
             {
               "PartName": "BagPart",
               "Name": "Education",
               "Settings": {
-                "DisplayName": "Education",
-                "Description": "Provides a collection behavior for your content item.",
-                "ContainedContentTypes": [
-                  "Teaching"
-                ],
-                "DisplayType": null,
-                "Position": "6"
+                "ContentTypePartSettings": {
+                  "DisplayName": "Education",
+                  "Description": "Provides a collection behavior for your content item.",
+                  "Position": "6"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Teaching"
+                  ]
+                }
               }
             },
             {
               "PartName": "BagPart",
               "Name": "Skills",
               "Settings": {
-                "DisplayName": "Skills",
-                "Description": "Provides a collection behavior for your content item.",
-                "Position": "7",
-                "ContainedContentTypes": [
-                  "Skill"
-                ],
-                "DisplayType": null
+                "ContentTypePartSettings": {
+                  "DisplayName": "Skills",
+                  "Description": "Provides a collection behavior for your content item.",
+                  "Position": "7"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Skill"
+                  ]
+                }
               }
             },
             {
               "PartName": "BagPart",
               "Name": "Awards",
               "Settings": {
-                "DisplayName": "Awards",
-                "Description": "Provides a collection behavior for your content item.",
-                "Position": "9",
-                "ContainedContentTypes": [
-                  "Award"
-                ],
-                "DisplayType": null
+                "ContentTypePartSettings": {
+                  "DisplayName": "Awards",
+                  "Description": "Provides a collection behavior for your content item.",
+                  "Position": "9"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Award"
+                  ]
+                }
               }
             },
             {
               "PartName": "BagPart",
               "Name": "Links",
               "Settings": {
-                "DisplayName": "Links",
-                "Description": "Provides a collection behavior for your content item.",
-                "ContainedContentTypes": [
-                  "Link"
-                ],
-                "DisplayType": null,
-                "Position": "4"
+                "ContentTypePartSettings": {
+                  "DisplayName": "Links",
+                  "Description": "Provides a collection behavior for your content item.",
+                  "Position": "4"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "FaLink"
+                  ]
+                },
+                "ContentIndexSettings": {}
               }
             },
             {
               "PartName": "BagPart",
               "Name": "Interests",
               "Settings": {
-                "DisplayName": "Interests",
-                "Description": "Provides a collection behavior for your content item.",
-                "ContainedContentTypes": [
-                  "Interest"
-                ],
-                "DisplayType": null,
-                "Position": "8"
+                "ContentTypePartSettings": {
+                  "DisplayName": "Interests",
+                  "Description": "Provides a collection behavior for your content item.",
+                  "Position": "8"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Interest"
+                  ]
+                }
               }
             }
           ]
         },
+        //FaLink
         {
-          "Name": "Container",
-          "DisplayName": "Container",
+          "Name": "FaLink",
+          "DisplayName": "Fa Link",
           "Settings": {
-            "Creatable": "False",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "False",
-            "Securable": "True",
-            "Stereotype": "Widget"
+            "ContentTypeSettings": {},
+            "FullTextAspectSettings": {}
           },
           "ContentTypePartDefinitionRecords": [
             {
-              "PartName": "Container",
-              "Name": "Container",
+              "PartName": "FaLink",
+              "Name": "FaLink",
               "Settings": {
-                "Position": "0"
-              }
-            },
-            {
-              "PartName": "FlowPart",
-              "Name": "FlowPart",
-              "Settings": {
-                "Position": "1"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             }
           ]
         },
-        {
-          "Name": "Blockquote",
-          "DisplayName": "Blockquote",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "False",
-            "Securable": "True",
-            "Stereotype": "Widget"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "Blockquote",
-              "Name": "Blockquote",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
-        {
-          "Name": "ImageWidget",
-          "DisplayName": "Image",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "False",
-            "Securable": "True",
-            "Stereotype": "Widget"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "Image",
-              "Name": "Image",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
-        {
-          "Name": "LiquidWidget",
-          "DisplayName": "Liquid",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "True",
-            "Securable": "True",
-            "Stereotype": "Widget"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "LiquidPart",
-              "Name": "LiquidPart",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
-        {
-          "Name": "Image",
-          "DisplayName": "Image",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "False",
-            "Versionable": "True",
-            "Listable": "False",
-            "Securable": "False",
-            "Stereotype": null
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "Image",
-              "Name": "Image",
-              "Settings": {
-                "Position": "0"
-              }
-            },
-            {
-              "PartName": "TitlePart",
-              "Name": "TitlePart",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
-        {
-          "Name": "Paragraph",
-          "DisplayName": "Paragraph",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "True",
-            "Versionable": "True",
-            "Listable": "False",
-            "Securable": "True",
-            "Stereotype": "Widget"
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "Paragraph",
-              "Name": "Paragraph",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
+        //Teaching
         {
           "Name": "Teaching",
           "DisplayName": "Teaching",
           "Settings": {
-            "Creatable": "False",
-            "Draftable": "False",
-            "Versionable": "False",
-            "Listable": "False",
-            "Securable": "False",
-            "Stereotype": null
+            "ContentTypeSettings": {}
           },
           "ContentTypePartDefinitionRecords": [
             {
               "PartName": "Teaching",
               "Name": "Teaching",
               "Settings": {
-                "Position": "1"
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
               }
             },
             {
               "PartName": "HtmlBodyPart",
               "Name": "HtmlBodyPart",
               "Settings": {
-                "Position": "2"
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
               }
             },
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
               "Settings": {
-                "Position": "0"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             }
           ]
         },
+        //Skill
         {
           "Name": "Skill",
           "DisplayName": "Skill",
@@ -616,6 +391,7 @@
             }
           ]
         },
+        //Award
         {
           "Name": "Award",
           "DisplayName": "Award",
@@ -644,27 +420,7 @@
             }
           ]
         },
-        {
-          "Name": "Link",
-          "DisplayName": "Link",
-          "Settings": {
-            "Creatable": "False",
-            "Draftable": "False",
-            "Versionable": "False",
-            "Listable": "False",
-            "Securable": "False",
-            "Stereotype": null
-          },
-          "ContentTypePartDefinitionRecords": [
-            {
-              "PartName": "Link",
-              "Name": "Link",
-              "Settings": {
-                "Position": "0"
-              }
-            }
-          ]
-        },
+        //Job
         {
           "Name": "Job",
           "DisplayName": "Job",
@@ -700,6 +456,7 @@
             }
           ]
         },
+        //Interest
         {
           "Name": "Interest",
           "DisplayName": "Interest",
@@ -727,236 +484,149 @@
               }
             }
           ]
-        }
-      ],
-      "ContentParts": [
-        {
-          "Name": "AliasPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a way to define custom aliases for content items."
-          },
-          "ContentPartFieldDefinitionRecords": []
         },
+        //RawHtml
         {
-          "Name": "AutoroutePart",
+          "Name": "RawHtml",
+          "DisplayName": "Html",
           "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a custom url for your content item."
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true,
+              "Stereotype": "Widget"
+            }
           },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "FlowPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a customizable body for your content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "BagPart",
-          "Settings": {
-            "Attachable": "True",
-            "Reusable": "True",
-            "Description": "Provides a collection behavior for your content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "WidgetsListPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a way to add widgets per content items."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "HtmlBodyPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides an HTML Body for your content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "ListPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Add a list behavior."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "MarkdownBodyPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a Markdown formatted body for your content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "CommonPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides an editor for the common properties of a content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "LiquidPart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a Liquid formatted body for your content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "TitlePart",
-          "Settings": {
-            "Attachable": "True",
-            "Description": "Provides a Title for your content item."
-          },
-          "ContentPartFieldDefinitionRecords": []
-        },
-        {
-          "Name": "HtmlWidget",
-          "Settings": {},
-          "ContentPartFieldDefinitionRecords": [
+          "ContentTypePartDefinitionRecords": [
             {
-              "FieldName": "HtmlField",
-              "Name": "Content",
+              "PartName": "RawHtml",
+              "Name": "RawHtml",
               "Settings": {
-                "DisplayName": "Content",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false
-                },
-                "Hint": null,
-                "Editor": "Multiline",
-                "Position": "0"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             }
           ]
         },
-        {
-          "Name": "MenuItem",
-          "Settings": {},
-          "ContentPartFieldDefinitionRecords": [
-            {
-              "FieldName": "TextField",
-              "Name": "Link",
-              "Settings": {
-                "DisplayName": "Link",
-                "Hint": null,
-                "Editor": null,
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false,
-                  "Template": null
-                },
-                "Position": "0"
-              }
-            }
-          ]
-        },
+        //Blockquote
         {
           "Name": "Blockquote",
-          "Settings": {},
-          "ContentPartFieldDefinitionRecords": [
+          "DisplayName": "Blockquote",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
             {
-              "FieldName": "TextField",
-              "Name": "Quote",
+              "PartName": "Blockquote",
+              "Name": "Blockquote",
               "Settings": {
-                "DisplayName": "Quote",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false
-                },
-                "Hint": null,
-                "Editor": "TextArea",
-                "Position": "0"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             }
           ]
         },
+        //Container
         {
-          "Name": "Image",
+          "Name": "Container",
+          "DisplayName": "Container",
           "Settings": {
-            "Attachable": true
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true,
+              "Stereotype": "Widget"
+            }
           },
-          "ContentPartFieldDefinitionRecords": [
+          "ContentTypePartDefinitionRecords": [
             {
-              "FieldName": "MediaField",
-              "Name": "Media",
+              "PartName": "Container",
+              "Name": "Container",
               "Settings": {
-                "DisplayName": "Image",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false
-                },
-                "Hint": null,
-                "Editor": null,
-                "Position": "0",
-                "Multiple": false,
-                "Required": true
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             },
             {
-              "FieldName": "TextField",
-              "Name": "Caption",
+              "PartName": "FlowPart",
+              "Name": "FlowPart",
               "Settings": {
-                "DisplayName": "Caption",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false,
-                  "Template": null
-                },
-                "Hint": "A description of the image used as title or alternate text",
-                "Editor": null,
-                "Position": "1"
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
               }
             }
           ]
         },
+        //Image
+        {
+          "Name": "Image",
+          "DisplayName": "Image",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Image",
+              "Name": "Image",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        //Paragraph
         {
           "Name": "Paragraph",
-          "Settings": {},
-          "ContentPartFieldDefinitionRecords": [
+          "DisplayName": "Paragraph",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
             {
-              "FieldName": "HtmlField",
-              "Name": "Content",
+              "PartName": "Paragraph",
+              "Name": "Paragraph",
               "Settings": {
-                "DisplayName": "Content",
-                "ContentIndexSettings": {
-                  "Included": false,
-                  "Stored": false,
-                  "Analyzed": false,
-                  "Sanitized": false,
-                  "Tokenized": false
-                },
-                "Hint": null,
-                "Editor": "Wysiwyg",
-                "Position": "0"
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
               }
             }
           ]
-        },
+        }
+      ],
+      "ContentParts": [
+
+        //Teaching
         {
           "Name": "Teaching",
           "Settings": {},
@@ -993,30 +663,7 @@
             }
           ]
         },
-        {
-          "Name": "Link",
-          "Settings": {},
-          "ContentPartFieldDefinitionRecords": [
-            {
-              "FieldName": "TextField",
-              "Name": "Url",
-              "Settings": {
-                "DisplayName": "Url",
-                "Hint": null,
-                "Editor": null
-              }
-            },
-            {
-              "FieldName": "TextField",
-              "Name": "Icon",
-              "Settings": {
-                "DisplayName": "Icon",
-                "Hint": "Css class suffix for the icon",
-                "Editor": null
-              }
-            }
-          ]
-        },
+        //Job
         {
           "Name": "Job",
           "Settings": {},
@@ -1052,47 +699,167 @@
             }
           ]
         },
+        //FaLink
+        {
+          "Name": "FaLink",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Faiconname",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Fa icon name",
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Url",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Url",
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        //LandingPage
         {
           "Name": "LandingPage",
           "Settings": {},
           "ContentPartFieldDefinitionRecords": [
             {
               "FieldName": "HtmlField",
-              "Name": "Subheading",
+              "Name": "Contact",
               "Settings": {
-                "DisplayName": "Description",
-                "Hint": null,
-                "Editor": "Wysiwyg"
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Contact",
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        //RawHtml
+        {
+          "Name": "RawHtml",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Content",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Content",
+                  "Editor": "Multiline",
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        //Blockquote
+        {
+          "Name": "Blockquote",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Quote",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Quote",
+                  "Position": "0",
+                  "Editor": "TextArea"
+                }
+              }
+            }
+          ]
+        },
+        //Image
+        {
+          "Name": "Image",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Media",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Image",
+                  "Position": "0"
+                },
+                "MediaFieldSettings": {
+                  "Required": true,
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Caption",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Caption",
+                  "Position": "1"
+                },
+                "TextFieldSettings": {
+                  "Hint": "A description of the image used as title or alternate text"
+                }
+              }
+            }
+          ]
+        },
+        //Paragraph
+        {
+          "Name": "Paragraph",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Content",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Content",
+                  "Position": "0",
+                  "Editor": "Wysiwyg"
+                }
               }
             }
           ]
         }
       ]
     },
+    //Content
     {
-      "name": "content",
-      "Data": [
+      "name": "Content",
+      "data": [
+        //Menu
         {
           "ContentItemId": "[js:uuid()]",
-          "ContentItemVersionId": "[js:uuid()]",
           "ContentType": "Menu",
+          "DisplayText": "Main Menu",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2018-08-11T14:09:15.3476156Z",
-          "PublishedUtc": "2018-08-11T14:09:15.3836919Z",
-          "CreatedUtc": "2017-08-16T00:32:59.1287452Z",
-          "Owner": null,
-          "Author": "admin",
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
           "MenuPart": {},
           "TitlePart": {
             "Title": "Main Menu"
           },
-          "DisplayText": "Main Menu",
           "MenuItemsListPart": {
             "MenuItems": [
               {
                 "ContentType": "LinkMenuItem",
                 "ContentItemId": "[js:uuid()]",
+                "DisplayText": "About",
                 "LinkMenuItemPart": {
                   "Name": "About",
                   "Url": "~/#about"
@@ -1101,6 +868,7 @@
               {
                 "ContentType": "LinkMenuItem",
                 "ContentItemId": "[js:uuid()]",
+                "DisplayText": "Experience",
                 "LinkMenuItemPart": {
                   "Name": "Experience",
                   "Url": "~/#experience"
@@ -1109,6 +877,7 @@
               {
                 "ContentType": "LinkMenuItem",
                 "ContentItemId": "[js:uuid()]",
+                "DisplayText": "Education",
                 "LinkMenuItemPart": {
                   "Name": "Education",
                   "Url": "~/#education"
@@ -1117,6 +886,7 @@
               {
                 "ContentType": "LinkMenuItem",
                 "ContentItemId": "[js:uuid()]",
+                "DisplayText": "Skills",
                 "LinkMenuItemPart": {
                   "Name": "Skills",
                   "Url": "~/#skills"
@@ -1125,6 +895,7 @@
               {
                 "ContentType": "LinkMenuItem",
                 "ContentItemId": "[js:uuid()]",
+                "DisplayText": "Interests",
                 "LinkMenuItemPart": {
                   "Name": "Interests",
                   "Url": "~/#interests"
@@ -1133,6 +904,7 @@
               {
                 "ContentType": "LinkMenuItem",
                 "ContentItemId": "[js:uuid()]",
+                "DisplayText": "Awards",
                 "LinkMenuItemPart": {
                   "Name": "Awards",
                   "Url": "~/#awards"
@@ -1144,20 +916,18 @@
             "Alias": "main-menu"
           }
         },
+        //LandingPage
         {
-          "ContentItemId": "[js:uuid()]",
-          "ContentItemVersionId": "[js:uuid()]",
+          "ContentItemId": "[js: variables('landingContentItemId')]",
           "ContentType": "LandingPage",
+          "DisplayText": "[js: parameters('SiteName')]",
           "Latest": true,
           "Published": true,
-          "ModifiedUtc": "2018-08-11T14:23:25.9829967Z",
-          "PublishedUtc": "2018-08-11T14:23:26.1177905Z",
-          "CreatedUtc": "2017-08-16T00:49:29.6251921Z",
-          "Owner": null,
-          "Author": "admin",
+          "Owner": "[js: parameters('AdminUserId')]",
+          "Author": "[js: parameters('AdminUsername')]",
           "LandingPage": {
-            "Subheading": {
-              "Html": "3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 · <a href=\"mailto:name@email.com\">name@email.com</a>"
+            "Contact": {
+              "Html": "3542 Berry Street · Cheyenne Wells, CO 80810 · (317) 585-8468 · <a href=\"#\">name@email.com</a>"
             }
           },
           "AutoroutePart": {
@@ -1167,21 +937,17 @@
           "TitlePart": {
             "Title": "[js: parameters('SiteName')]"
           },
-          "DisplayText": "[js: parameters('SiteName')]",
           "Experience": {
             "ContentItems": [
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Job",
+                "DisplayText": "Senior Web Developer",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0042223Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Job": {
                   "Company": {
                     "Text": "Intelitec Solutions"
@@ -1198,21 +964,17 @@
                 },
                 "TitlePart": {
                   "Title": "Senior Web Developer"
-                },
-                "DisplayText": "Senior Web Developer"
+                }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Job",
+                "DisplayText": "Web Developer",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0143793Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Job": {
                   "Company": {
                     "Text": "Intelitec Solutions"
@@ -1229,21 +991,17 @@
                 },
                 "TitlePart": {
                   "Title": "Web Developer"
-                },
-                "DisplayText": "Web Developer"
+                }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Job",
+                "DisplayText": "Junior Web Designer",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0200218Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Job": {
                   "Company": {
                     "Text": "Shout! Media Productions"
@@ -1260,21 +1018,17 @@
                 },
                 "TitlePart": {
                   "Title": "Junior Web Designer"
-                },
-                "DisplayText": "Junior Web Designer"
+                }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Job",
+                "DisplayText": "Web Design Intern",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0315183Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Job": {
                   "Company": {
                     "Text": "Shout! Media Productions"
@@ -1291,28 +1045,24 @@
                 },
                 "TitlePart": {
                   "Title": "Web Design Intern"
-                },
-                "DisplayText": "Web Design Intern"
+                }
               }
             ]
           },
           "HtmlBodyPart": {
-            "Html": "<p><span style=\"color: rgb(134, 142, 150); font-family: Muli, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 18.4px;\">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</span></p>"
+            "Html": "<p><span style=\"color: rgba(134, 142, 150, 1); font-family: Muli, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 18.4px\">I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</span></p>"
           },
           "Education": {
             "ContentItems": [
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Teaching",
+                "DisplayText": "University of Colorado Boulder",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0466318Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Teaching": {
                   "Qualification": {
                     "Text": "Bachelor of Science"
@@ -1325,25 +1075,21 @@
                   }
                 },
                 "HtmlBodyPart": {
-                  "Html": "Computer Science - Web Development Track\r\nGPA: 3.23"
+                  "Html": "Computer Science - Web Development Track\nGPA: 3.23"
                 },
                 "TitlePart": {
                   "Title": "University of Colorado Boulder"
-                },
-                "DisplayText": "University of Colorado Boulder"
+                }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Teaching",
+                "DisplayText": "James Buchanan High School",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0532626Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Teaching": {
                   "Qualification": {
                     "Text": "Technology Magnet Program"
@@ -1360,137 +1106,131 @@
                 },
                 "TitlePart": {
                   "Title": "James Buchanan High School"
-                },
-                "DisplayText": "James Buchanan High School"
+                }
               }
             ]
           },
           "Skills": {
-            "ContentItems": []
+            "ContentItems": [
+              {
+                "ContentItemId": "[js:uuid()]",
+                "ContentItemVersionId": "[js:uuid()]",
+                "ContentType": "Skill",
+                "DisplayText": "Orchard Development 😊",
+                "Latest": false,
+                "Published": false,
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
+                "Skill": {},
+                "TitlePart": {
+                  "Title": "Orchard Development 😊"
+                }
+              }
+            ]
           },
           "Awards": {
             "ContentItems": [
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Award",
+                "DisplayText": "Google Analytics Certified Developer",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0664291Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Award": {},
                 "TitlePart": {
                   "Title": "Google Analytics Certified Developer"
-                },
-                "DisplayText": "Google Analytics Certified Developer"
+                }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Award",
+                "DisplayText": "Mobile Web Specialist - Google Certification",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0686833Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Award": {},
                 "TitlePart": {
                   "Title": "Mobile Web Specialist - Google Certification"
-                },
-                "DisplayText": "Mobile Web Specialist - Google Certification"
+                }
               }
             ]
           },
           "Links": {
             "ContentItems": [
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
-                "ContentType": "Link",
+                "ContentItemVersionId": "[js:uuid()]",
+                "ContentType": "FaLink",
+                "DisplayText": "",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0740099Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Link": {
-                  "Url": {
-                    "Text": "#"
-                  },
-                  "Icon": {
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
+                "FaLink": {
+                  "Faiconname": {
                     "Text": "linkedin"
+                  },
+                  "Url": {
+                    "Text": "#"
                   }
                 }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
-                "ContentType": "Link",
+                "ContentItemVersionId": "[js:uuid()]",
+                "ContentType": "FaLink",
+                "DisplayText": "",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0805886Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Link": {
-                  "Url": {
-                    "Text": "#"
-                  },
-                  "Icon": {
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
+                "FaLink": {
+                  "Faiconname": {
                     "Text": "github"
+                  },
+                  "Url": {
+                    "Text": "#"
                   }
                 }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
-                "ContentType": "Link",
+                "ContentItemVersionId": "[js:uuid()]",
+                "ContentType": "FaLink",
+                "DisplayText": "",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0842386Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Link": {
-                  "Url": {
-                    "Text": "#"
-                  },
-                  "Icon": {
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
+                "FaLink": {
+                  "Faiconname": {
                     "Text": "twitter"
+                  },
+                  "Url": {
+                    "Text": "#"
                   }
                 }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
-                "ContentType": "Link",
+                "ContentItemVersionId": "[js:uuid()]",
+                "ContentType": "FaLink",
+                "DisplayText": "",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.087367Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
-                "Link": {
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
+                "FaLink": {
+                  "Faiconname": {
+                    "Text": "facebook"
+                  },
                   "Url": {
                     "Text": "#"
-                  },
-                  "Icon": {
-                    "Text": "facebook"
                   }
                 }
               }
@@ -1499,34 +1239,28 @@
           "Interests": {
             "ContentItems": [
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Interest",
+                "DisplayText": "",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.0992334Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Interest": {},
                 "HtmlBodyPart": {
                   "Html": "Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking."
                 }
               },
               {
-                "Id": 0,
                 "ContentItemId": "[js:uuid()]",
-                "ContentItemVersionId": null,
+                "ContentItemVersionId": "[js:uuid()]",
                 "ContentType": "Interest",
+                "DisplayText": "",
                 "Latest": false,
                 "Published": false,
-                "ModifiedUtc": "2018-08-11T14:23:26.1019947Z",
-                "PublishedUtc": null,
-                "CreatedUtc": null,
-                "Owner": null,
-                "Author": "admin",
+                "Owner": "[js: parameters('AdminUserId')]",
+                "Author": "[js: parameters('AdminUsername')]",
                 "Interest": {},
                 "HtmlBodyPart": {
                   "Html": "When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world."
@@ -1537,11 +1271,38 @@
         }
       ]
     },
+    //layers
+    {
+      "name": "layers",
+      "Layers": [
+        {
+          "Name": "Always",
+          "Rule": "true",
+          "Description": "The widgets in this layer are displayed on any page of this site."
+        },
+        {
+          "Name": "Homepage",
+          "Rule": "isHomepage()",
+          "Description": "The widgets in this layer are only displayed on the homepage."
+        }
+      ]
+    },
+    //media
+    {
+      "name": "media",
+      "Files": [
+        {
+          "Path": "img/profile.jpg",
+          "Base64": "[file:base64('img/profile.jpg')]"
+        }
+      ]
+    },
+    //Templates
     {
       "name": "Templates",
       "Templates": {
         "Content__LandingPage": {
-          "Content": "<section class=\"resume-section\" id=\"about\">\r\n  <div class=\"resume-section-content\">\r\n    <h1 class=\"mb-0\">\r\n      <span class=\"text-primary\">{{ Model.ContentItem.Content.TitlePart.Title }}</span>\r\n    </h1>\r\n    <div class=\"subheading mb-5\">{{ Model.ContentItem.Content.LandingPage.Subheading.Html | raw }}</div>          \r\n    <p class=\"lead mb-5\">{{ Model.ContentItem.Content.HtmlBodyPart.Html | raw }}</p>\r\n    {% if Model.ContentItem.Content.Experience.ContentItems.size > 0 %}\r\n    <div class=\"social-icons\">\r\n      {% for link in Model.ContentItem.Content.Links.ContentItems %}\r\n      <a href=\"{{ link.Link.Url.Text }}\">\r\n        <i class=\"fab fa-{{ link.Link.Icon.Text }}\"></i>\r\n      </a>\r\n      {% endfor %}\r\n    </div>\r\n    {% endif %}\r\n  </div>\r\n</section>\r\n{% assign format = \"MMMM yyyy\" | t %}\r\n{% if Model.ContentItem.Content.Experience.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"experience\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Experience</h2>\r\n    {% for job in Model.ContentItem.Content.Experience.ContentItems %}\r\n    <div class=\"resume-item d-flex flex-column flex-md-row mb-5\">\r\n      <div class=\"resume-content mr-auto\">\r\n        <h3 class=\"mb-0\">{{ job.TitlePart.Title }}</h3>\r\n        <div class=\"subheading mb-3\">{{ job.Job.Company.Text }}</div>\r\n        <p>{{ job.HtmlBodyPart.Html | raw }}</p>\r\n      </div>\r\n      <div class=\"flex-shrink-0\">\r\n      {% assign dateStart = \"DateTime\" | shape_new: utc: job.Job.Start.Value, format: format | shape_stringify %}\r\n      {% assign dateEnd = \"DateTime\" | shape_new: utc: job.Job.End.Value, format: format | shape_stringify %}\r\n        <span class=\"text-primary\">{{ \"{0}\" | t: dateStart | raw }} - {{ \"{0}\" | t: dateEnd | raw }}</span>\r\n      </div>\r\n    </div>\r\n    {% endfor %}\r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Education.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"education\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Education</h2>\r\n    {% for teaching in Model.ContentItem.Content.Education.ContentItems %}\r\n    <div class=\"resume-item d-flex flex-column flex-md-row mb-5\">\r\n      <div class=\"resume-content mr-auto\">\r\n        <h3 class=\"mb-0\">{{ teaching.TitlePart.Title }}</h3>\r\n        <div class=\"subheading mb-3\">{{ teaching.Teaching.Qualification.Text }}</div>\r\n        <p>{{ job.HtmlBodyPart.Html | raw }}</p>\r\n      </div>\r\n      <div class=\"flex-shrink-0\">\r\n      {% assign dateStart = \"DateTime\" | shape_new: utc: teaching.Teaching.Start.Value, format: format | shape_stringify %}\r\n      {% assign dateEnd = \"DateTime\" | shape_new: utc: teaching.Teaching.End.Value, format: format | shape_stringify %}\r\n        <span class=\"text-primary\">{{ \"{0}\" | t: dateStart | raw }} - {{ \"{0}\" | t: dateEnd | raw }}</span>\r\n      </div>\r\n    </div>\r\n    {% endfor %}\r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Skills.ContentItems.size > 0 %}   \r\n<section class=\"resume-section\" id=\"skills\">\r\n        <div class=\"resume-section-content\">\r\n          <h2 class=\"mb-5\">Skills</h2>\r\n\r\n          <div class=\"subheading mb-3\">Programming Languages &amp; Tools</div>\r\n          <ul class=\"list-inline dev-icons\">\r\n            <li class=\"list-inline-item\">\r\n              <i class=\"fab fa-html5\"></i>\r\n            </li>\r\n            <li class=\"list-inline-item\">\r\n              <i class=\"fab fa-css3-alt\"></i>\r\n            </li>\r\n            <li class=\"list-inline-item\">\r\n              <i class=\"fab fa-js-square\"></i>\r\n            </li>\r\n          </ul>\r\n   \r\n          <div class=\"subheading mb-3\">Competencies</div>   \r\n          <ul class=\"fa-ul mb-0\">         \r\n    {% for skill in Model.ContentItem.Content.Skills.ContentItems %}\r\n            <li>\r\n              <i class=\"fa-li fa fa-check\"></i> {{ skill.TitlePart.Title }}</li> \r\n    {% endfor %}  \r\n          </ul>\r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Interests.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"interests\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Interests</h2>\r\n    {% for interest in Model.ContentItem.Content.Interests.ContentItems %}\r\n    <p>{{ interest.HtmlBodyPart.Html | raw }}</p>\r\n    {% endfor %}           \r\n  </div>\r\n</section>\r\n{% endif %}\r\n\r\n{% if Model.ContentItem.Content.Awards.ContentItems.size > 0 %}\r\n<section class=\"resume-section\" id=\"awards\">\r\n  <div class=\"resume-section-content\">\r\n    <h2 class=\"mb-5\">Awards</h2>\r\n    <ul class=\"fa-ul mb-0\">\r\n    {% for award in Model.ContentItem.Content.Awards.ContentItems %}\r\n      <li><i class=\"fa-li fa fa-trophy text-warning\"></i> {{ award.TitlePart.Title }}</li> \r\n    {% endfor %}           \r\n    </ul>\r\n  </div>\r\n</section>\r\n{% endif %}",
+          "Content": "[file:text('Snippets/landingpage.liquid')]",
           "Description": "A template for the Landing Page content type"
         },
         "Widget": {
@@ -1561,30 +1322,6 @@
           "Description": null
         }
       }
-    },
-    {
-      "name": "media",
-      "Files": [
-        {
-          "Path": "img/profile.jpg",
-          "Base64": "[file:base64('img/profile.jpg')]"
-        }
-      ]
-    },
-    {
-      "name": "layers",
-      "Layers": [
-        {
-          "Name": "Always",
-          "Rule": "true",
-          "Description": "The widgets in this layer are displayed on any page of this site."
-        },
-        {
-          "Name": "Homepage",
-          "Rule": "isHomepage()",
-          "Description": "The widgets in this layer are only displayed on the homepage."
-        }
-      ]
     }
   ]
 }

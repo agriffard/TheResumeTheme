@@ -1,5 +1,7 @@
-﻿<ul class="nav navbar-nav navbar-right {{ Model.Classes | join: " " }}">
-  {% for item in Model.Items %}
-  {{ item | shape_render }}
-  {% endfor %}
-</ul>
+<div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+        {% for item in Model.Items %}
+        {{ item | shape_render }}
+        {% endfor %}
+    </ul>
+</div>
