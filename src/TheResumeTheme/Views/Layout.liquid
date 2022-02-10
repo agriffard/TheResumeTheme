@@ -6,8 +6,10 @@
       <title>{{ "PageTitle" | shape_new | shape_stringify }}</title> 
       {% shape "Metas" %}
       <link rel="icon" type="image/x-icon" href="/TheResumeTheme/favicon.ico" />
-      <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+      {% style src:"~/TheResumeTheme/css/muli-font.css",
+            cdn_src:"https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" %}
+      {% style src:"~/TheResumeTheme/css/saira-extra-condensed-font.css",
+            cdn_src:"https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" %}    
       {% style name:"bootstrap", version:"4" %}
       {% script name:"bootstrap", version:"4" %}
       {% style name:"Resume", version:"6" %}
