@@ -3,8 +3,6 @@ using OrchardCore.ResourceManagement;
 
 namespace TheResumeTheme
 {
-
-
     public class ResourceManagementOptionsConfiguration : IConfigureOptions<ResourceManagementOptions>
     {
         private static readonly ResourceManifest _manifest = new ResourceManifest();
