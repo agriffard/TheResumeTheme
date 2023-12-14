@@ -49,7 +49,7 @@
         "OrchardCore.Html",
         "OrchardCore.Indexing",
         "OrchardCore.Layers",
-        "OrchardCore.Lucene",
+        "OrchardCore.Search.Lucene",
         "OrchardCore.Lists",
         "OrchardCore.Liquid",
         "OrchardCore.Media",
