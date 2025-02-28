@@ -1292,8 +1292,8 @@
       "name": "media",
       "Files": [
         {
-          "Path": "img/profile.jpg",
-          "Base64": "[file:base64('img/profile.jpg')]"
+          "SourcePath": "img/profile.jpg",
+          "TargetPath": "img/profile.jpg"
         }
       ]
     },
