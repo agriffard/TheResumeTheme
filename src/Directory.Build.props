@@ -5,7 +5,7 @@
     <Title>Resume Theme</Title>
     <Description>Resume Theme for Orchard Core</Description>
     <PackageTags>Theme;OrchardCore</PackageTags>
-    <VersionPrefix>2.1.6</VersionPrefix>
+    <VersionPrefix>2.1.7</VersionPrefix>
     <VersionSuffix></VersionSuffix>
   </PropertyGroup>
 
